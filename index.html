@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>East Nashville New Build Analyzer · Jason Kaczmarski · RE/MAX 1st Choice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#C0392B;--red-dark:#96281B;--red-light:#fdf2f0;
+  --gold:#B8860B;--gold-light:#fdf9e7;
+  --green:#1a6b3c;--green-light:#edf7f2;
+  --navy:#1e3a6b;--navy-light:#eef4ff;
+  --bg:#f8f7f5;--card:#ffffff;--border:#e5e3de;
+  --text:#1a1a1a;--muted:#6b6860;--light:#f2f0eb;
+  --shadow:0 1px 3px rgba(0,0,0,.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;}
+
+/* ── HEADER ── */
+.site-header{background:var(--red);padding:0;}
+.header-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.header-logo{height:38px;filter:brightness(0) invert(1);}
+.header-text h1{font-family:'DM Serif Display',serif;font-size:19px;color:#fff;font-weight:400;line-height:1.2;}
+.header-text p{font-size:11px;color:rgba(255,255,255,.72);letter-spacing:.06em;text-transform:uppercase;margin-top:1px;}
+.header-cta{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:background .15s;}
+.header-cta:hover{background:rgba(255,255,255,.28);}
+
+/* ── HERO ── */
+.hero{background:#1a1a1a;border-bottom:3px solid var(--red);}
+.hero-inner{max-width:1100px;margin:0 auto;padding:44px 24px 40px;}
+.hero h2{font-family:'DM Serif Display',serif;font-size:36px;color:#fff;font-weight:400;line-height:1.2;max-width:700px;}
+.hero h2 em{color:#e8c97e;font-style:italic;}
+.hero p{font-size:14px;color:rgba(255,255,255,.55);margin-top:10px;line-height:1.7;max-width:620px;}
+.zip-toggle-wrap{margin-top:24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.zip-toggle-label{font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase;}
+.zip-toggle{display:flex;gap:0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:8px;overflow:hidden;}
+.zip-btn{padding:10px 28px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;background:transparent;color:rgba(255,255,255,.6);border:none;cursor:pointer;transition:all .2s;letter-spacing:.03em;}
+.zip-btn.active{background:var(--red);color:#fff;}
+.zip-btn:hover:not(.active){color:#fff;background:rgba(255,255,255,.12);}
+
+/* ── MAIN LAYOUT ── */
+.main-wrap{max-width:1100px;margin:0 auto;padding:32px 24px 60px;}
+
+/* ── ZIP CONTEXT STRIP ── */
+.zip-context{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.zip-context-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+.zip-stat-row{display:flex;gap:24px;flex-wrap:wrap;}
+.zip-stat{text-align:center;}
+.zip-stat-val{font-size:18px;font-weight:600;color:var(--red);display:block;}
+.zip-stat-lbl{font-size:11px;color:var(--muted);}
+
+/* ── TABS ── */
+.tab-bar{display:flex;background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:20px;}
+.tab-btn{flex:1;padding:14px 10px;font-size:13px;font-weight:500;color:var(--muted);background:transparent;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;border-right:1px solid var(--border);transition:all .15s;text-align:center;}
+.tab-btn:last-child{border-right:none;}
+.tab-btn.active{background:var(--red);color:#fff;}
+.tab-btn:hover:not(.active){background:var(--light);color:var(--text);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* ── CARDS ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px;}
+.card-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:12px;}
+
+/* ── ZONING TOGGLES ── */
+.zone-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+.z-btn{padding:9px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--muted);font-weight:500;transition:all .15s;line-height:1.3;text-align:left;}
+.z-btn:hover{border-color:#aaa;color:var(--text);}
+.z-btn.active{background:var(--red);color:#fff;border-color:var(--red);}
+.z-btn.sp-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+.z-btn .zcode{font-weight:700;display:block;font-size:13px;}
+.z-btn .zdesc{font-size:11px;opacity:.8;display:block;}
+
+/* ── INPUTS ── */
+.input-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.input-row:last-child{margin-bottom:0;}
+.input-row label{font-size:13px;color:var(--muted);min-width:152px;flex-shrink:0;}
+.input-row input[type=text],.input-row input[type=number]{border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:14px;font-family:'DM Sans',sans-serif;width:160px;background:var(--bg);color:var(--text);}
+.units-row{display:flex;align-items:center;gap:10px;margin-top:12px;}
+.units-row label{font-size:13px;color:var(--muted);}
+.units-row input[type=number]{width:72px;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:14px;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);}
+
+/* ── SLIDERS ── */
+.sl-group{margin-bottom:18px;}
+.sl-group:last-child{margin-bottom:0;}
+.sl-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+.sl-label{font-size:13px;color:var(--text);}
+.sl-val{font-size:14px;font-weight:600;color:var(--red);}
+input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;height:4px;}
+.sl-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:3px;}
+
+/* ── BUBBLES ── */
+.bubble{display:block;background:#fff8e6;border:1px solid #e8c97e;border-radius:6px;padding:8px 13px;font-size:12px;color:#6b4e00;margin-top:9px;line-height:1.55;}
+.bubble.danger{background:var(--red-light);border-color:#f5c6c0;color:var(--red-dark);}
+.bubble.sp-notice{background:var(--navy-light);border-color:#c5d3f0;color:var(--navy);}
+
+/* ── RESULTS ── */
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
+.rc{background:var(--light);border-radius:8px;padding:14px 16px;}
+.rc.highlight{background:var(--red);}
+.rc.good{background:var(--green-light);border:1px solid #b8ddc9;}
+.rc.warn{background:#fff8e6;border:1px solid #e8c97e;}
+.rc.bad{background:var(--red-light);border:1px solid #f5c6c0;}
+.rc.span2{grid-column:1/-1;}
+.rc-label{font-size:11px;letter-spacing:.05em;text-transform:uppercase;opacity:.7;margin-bottom:4px;}
+.rc-val{font-size:22px;font-weight:600;line-height:1.15;}
+.rc-sub{font-size:11px;opacity:.6;margin-top:3px;}
+.rc.highlight .rc-label,.rc.highlight .rc-val,.rc.highlight .rc-sub{color:#fff;}
+.cost-line{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--light);font-size:13px;}
+.cost-line:last-child{border-bottom:none;}
+.cost-line.bold{font-weight:600;}
+.divider{height:1px;background:var(--border);margin:14px 0;}
+.fbar{height:10px;border-radius:5px;background:var(--border);margin:6px 0;overflow:hidden;}
+.ffill{height:100%;border-radius:5px;transition:width .35s;}
+.note{font-size:12px;color:var(--muted);line-height:1.65;padding:10px 14px;background:var(--light);border-radius:6px;}
+.per-unit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
+.pug{background:var(--light);border-radius:6px;padding:10px 12px;}
+.pug-val{font-size:16px;font-weight:600;}
+.pug-lbl{font-size:11px;color:var(--muted);margin-top:2px;}
+.pm-row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px;}
+
+/* ── MARKET CHARTS ── */
+.insight-bar{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--muted);line-height:1.7;}
+.insight-bar strong{color:var(--text);}
+.yr-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.yr-btn{padding:5px 14px;border-radius:20px;border:1px solid var(--border);font-size:12px;font-weight:500;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--muted);transition:all .15s;}
+.yr-btn.active{background:var(--red);color:#fff;border-color:var(--red);}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
+.stat-pill{background:var(--light);border-radius:8px;padding:12px 14px;}
+.sp-val{font-size:18px;font-weight:600;color:var(--red);}
+.sp-lbl{font-size:11px;color:var(--muted);margin-top:2px;}
+.chart-wrap{position:relative;width:100%;height:280px;margin-bottom:6px;}
+.legend-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-size:12px;color:var(--muted);}
+.leg-dot{width:10px;height:10px;border-radius:2px;display:inline-block;flex-shrink:0;}
+.comparison-note{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:12px;color:var(--muted);line-height:1.7;margin-top:8px;}
+.comparison-note strong{color:var(--text);}
+
+/* ── FOOTER ── */
+.site-footer{background:#1a1a1a;border-top:3px solid var(--red);padding:40px 24px;}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.footer-logo-block img{height:36px;filter:brightness(0) invert(1);margin-bottom:12px;}
+.footer-logo-block p{font-size:12px;color:rgba(255,255,255,.45);line-height:1.7;max-width:280px;}
+.footer-cta-block{text-align:right;}
+.footer-cta-block h3{font-family:'DM Serif Display',serif;font-size:18px;color:#fff;font-weight:400;margin-bottom:8px;}
+.footer-cta-block p{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:14px;}
+.footer-cta-btn{display:inline-block;background:var(--red);color:#fff;padding:10px 22px;border-radius:7px;text-decoration:none;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;transition:background .15s;}
+.footer-cta-btn:hover{background:var(--red-dark);}
+.footer-bottom{max-width:1100px;margin:24px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;color:rgba(255,255,255,.3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+
+@media(max-width:640px){
+  .hero h2{font-size:26px;}
+  .results-grid{grid-template-columns:1fr;}
+  .stat-grid{grid-template-columns:1fr 1fr;}
+  .tab-btn{font-size:11px;padding:12px 6px;}
+  .per-unit-grid{grid-template-columns:1fr 1fr;}
+  .footer-cta-block{text-align:left;}
+  .footer-bottom{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <img class="header-logo" src="https://kvcore-library.s3.amazonaws.com/remax1stchoice8207/images/03b9616f75a8e185d56a93c799829fdf.png" alt="RE/MAX 1st Choice">
+      <div class="header-text">
+        <h1>East Nashville New Build Analyzer</h1>
+        <p>Jason Kaczmarski · RE/MAX 1st Choice · (615) 587-7888</p>
+      </div>
+    </div>
+    <a href="https://the-jason-kaczmarski-team-springfield-tn.remax.com/ask/9539cc58d5c28bd9c77d6755120798e0" class="header-cta" target="_blank" rel="noopener">Talk to Jason →</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h2>New Build <em>Pro Forma</em> &amp; Market Trends</h2>
+    <p>Model your lot + build economics before you commit — then compare against six years of closed new construction data across both East Nashville zip codes. Option A finds your required exit price. Option B shows your margin on a price you already know.</p>
+    <div class="zip-toggle-wrap">
+      <span class="zip-toggle-label">Zip code</span>
+      <div class="zip-toggle">
+        <button class="zip-btn active" onclick="setZip('37207',this)" aria-pressed="true">37207</button>
+        <button class="zip-btn" onclick="setZip('37206',this)" aria-pressed="false">37206</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="main-wrap">
+
+  <!-- ZIP CONTEXT STRIP -->
+  <div class="zip-context" id="zip-context">
+    <div>
+      <div class="zip-context-label" id="ctx-label">37207 · East Nashville · 2025 snapshot</div>
+    </div>
+    <div class="zip-stat-row" id="ctx-stats"></div>
+  </div>
+
+  <!-- TAB BAR -->
+  <div class="tab-bar" role="tablist">
+    <button class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab('opta',this)">Option A · Find exit price</button>
+    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('optb',this)">Option B · Know your price</button>
+    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('market',this)">Market trends 2020–2025</button>
+  </div>
+
+  <!-- ══════════ OPTION A ══════════ -->
+  <div id="opta" class="tab-panel active">
+
+    <div class="card">
+      <div class="card-title">Zoning</div>
+      <div class="zone-row">
+        <button class="z-btn active" onclick="setZone('rs',this,'a')"><span class="zcode">Rs Zoning</span><span class="zdesc">· 1 unit</span></button>
+        <button class="z-btn" onclick="setZone('r',this,'a')"><span class="zcode">R Zoning</span><span class="zdesc">· 2 units</span></button>
+        <button class="z-btn" onclick="setZone('mul',this,'a')"><span class="zcode">Mul Zoning</span><span class="zdesc">· multi-unit</span></button>
+        <button class="z-btn sp-btn" onclick="setZone('sp',this,'a')"><span class="zcode">SP Zoning</span><span class="zdesc">· special purpose</span></button>
+      </div>
+      <div id="a-sp-notice" style="display:none" class="bubble sp-notice">SP Zoning is subject to city/county approval. Approval is not guaranteed and timelines vary significantly. Do not underwrite a deal that depends on SP approval without consulting a land use attorney. Contact Jason for guidance.</div>
+      <div id="a-units-row" style="display:none" class="units-row">
+        <label id="a-units-lbl">Number of units planned:</label>
+        <input type="number" id="a-units" value="2" min="2" max="50" oninput="calcA()">
+      </div>
+      <div id="a-identical-q" style="display:none" class="bubble" style="margin-top:8px">This calculator assumes all units are identical — each gets an equal share of land cost and equal build parameters. Model differently sized units separately.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Lot / acquisition</div>
+      <div class="input-row">
+        <label>Lot or teardown cost</label>
+        <input type="text" id="a-lot" value="$120,000" oninput="fmtM(this);calcA()">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Build parameters <span style="font-weight:400;font-size:11px;text-transform:none;letter-spacing:0;color:var(--muted)">(per unit)</span></div>
+      <div class="sl-group">
+        <div class="sl-header"><span class="sl-label">Square footage per unit</span><span class="sl-val" id="a-sqft-val">1,800 sqft</span></div>
+        <input type="range" id="a-sqft" min="1000" max="3500" step="50" value="1800" oninput="calcA()">
+        <div class="sl-ends"><span>1,000 sqft</span><span>3,500 sqft</span></div>
+        <div id="a-sqft-bubble" style="display:none" class="bubble">Above 3,000 sqft approaches custom build territory — costs, timelines, and finishes vary widely. <strong>Contact Jason or a licensed builder for specifics.</strong></div>
+      </div>
+      <div class="sl-group">
+        <div class="sl-header"><span class="sl-label">Build cost per sqft</span><span class="sl-val" id="a-bpsf-val">$175 / sqft</span></div>
+        <input type="range" id="a-bpsf" min="150" max="300" step="5" value="175" oninput="calcA()">
+        <div class="sl-ends"><span>$150</span><span>$300</span></div>
+        <div id="a-bpsf-bubble" style="display:none" class="bubble danger">Above $250/sqft is approaching custom build territory. Contact Jason or a licensed builder/contractor for more specific details.</div>
+      </div>
+      <div class="sl-group">
+        <div class="sl-header"><span class="sl-label">Selling cost % of sale price</span><span class="sl-val" id="a-sell-val">7.5%</span></div>
+        <input type="range" id="a-sell" min="2" max="10" step="0.5" value="7.5" oninput="calcA()">
+        <div class="sl-ends"><span>2%</span><span>10%</span></div>
+      </div>
+      <div class="sl-group">
+        <div class="sl-header"><span class="sl-label">Profit margin target</span><span class="sl-val" id="a-profit-val">15%</span></div>
+        <input type="range" id="a-profit" min="5" max="40" step="1" value="15" oninput="calcA()">
+        <div class="sl-ends"><span>5%</span><span>40%</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Cost stack &amp; required exit price</div>
+      <div id="a-cost-lines"></div>
+      <div class="divider"></div>
+      <div class="results-grid">
+        <div class="rc highlight span2">
+          <div class="rc-label">Minimum sale price to hit your target</div>
+          <div class="rc-val" id="a-min-price">—</div>
+          <div class="rc-sub" id="a-min-sub">—</div>
+        </div>
+        <div class="rc"><div class="rc-label">All-in build cost</div><div class="rc-val" id="a-allin">—</div><div class="rc-sub" id="a-allin-sub">—</div></div>
+        <div class="rc"><div class="rc-label">Selling costs at exit</div><div class="rc-val" id="a-sellc">—</div><div class="rc-sub" id="a-sellc-sub">—</div></div>
+        <div class="rc"><div class="rc-label">Profit at target</div><div class="rc-val" id="a-profd">—</div><div class="rc-sub">After all costs</div></div>
+        <div class="rc"><div class="rc-label">Exit price / sqft</div><div class="rc-val" id="a-epsf">—</div><div class="rc-sub" id="a-epsf-ctx">vs. 2025 market median</div></div>
+      </div>
+      <div class="divider"></div>
+      <div class="card-title">Lot cost as % of exit — investor rule of thumb</div>
+      <div class="fbar"><div class="ffill" id="a-lot-bar"></div></div>
+      <div class="note" id="a-lot-note"></div>
+    </div>
+
+    <div class="note">Build cost per sqft typically runs higher on smaller homes (more kitchen and bath per sqft). These sliders are a starting-point model — always confirm with a licensed builder before committing to a deal.</div>
+  </div>
+
+  <!-- ══════════ OPTION B ══════════ -->
+  <div id="optb" class="tab-panel">
+
+    <div class="card">
+      <div class="card-title">Zoning</div>
+      <div class="zone-row">
+        <button class="z-btn active" onclick="setZone('rs',this,'b')"><span class="zcode">Rs Zoning</span><span class="zdesc">· 1 unit</span></button>
+        <button class="z-btn" onclick="setZone('r',this,'b')"><span class="zcode">R Zoning</span><span class="zdesc">· 2 units</span></button>
+        <button class="z-btn" onclick="setZone('mul',this,'b')"><span class="zcode">Mul Zoning</span><span class="zdesc">· multi-unit</span></button>
+        <button class="z-btn sp-btn" onclick="setZone('sp',this,'b')"><span class="zcode">SP Zoning</span><span class="zdesc">· special purpose</span></button>
+      </div>
+      <div id="b-sp-notice" style="display:none" class="bubble sp-notice">SP Zoning is subject to city/county approval. Approval is not guaranteed and timelines vary significantly. Do not underwrite a deal that depends on SP approval without consulting a land use attorney. Contact Jason for guidance.</div>
+      <div id="b-units-row" style="display:none" class="units-row">
+        <label id="b-units-lbl">Number of units planned:</label>
+        <input type="number" id="b-units" value="2" min="2" max="50" oninput="calcB()">
+      </div>
+      <div id="b-identical-q" style="display:none" class="bubble">This calculator splits land cost equally and applies the same build and sale price per unit. Model differently sized units separately.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Acquisition</div>
+      <div class="input-row"><label>Lot or teardown cost</label><input type="text" id="b-lot" value="$120,000" oninput="fmtM(this);calcB()"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Build &amp; sale inputs <span style="font-weight:400;font-size:11px;text-transform:none;letter-spacing:0;color:var(--muted)">(per unit)</span></div>
+      <div class="input-row"><label>Square footage per unit</label><input type="number" id="b-sqft" value="1800" min="500" max="6000" oninput="calcB()"></div>
+      <div class="input-row"><label>Build cost per sqft ($)</label><input type="number" id="b-bpsf" value="175" min="50" max="1000" oninput="calcB()"></div>
+      <div id="b-bpsf-bubble" style="display:none" class="bubble danger">Above $250/sqft is approaching custom build territory. Contact Jason or a licensed builder/contractor for more specific details.</div>
+      <div class="input-row" style="margin-top:12px"><label>Expected sale price per unit</label><input type="text" id="b-sale" value="$550,000" oninput="fmtM(this);calcB()"></div>
+      <div class="sl-group" style="margin-top:14px">
+        <div class="sl-header"><span class="sl-label">Selling cost % of sale price</span><span class="sl-val" id="b-sell-val">7.5%</span></div>
+        <input type="range" id="b-sell" min="2" max="10" step="0.5" value="7.5" oninput="calcB()">
+        <div class="sl-ends"><span>2%</span><span>10%</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Pro forma — per unit &amp; total project</div>
+      <div id="b-cost-lines"></div>
+      <div class="divider"></div>
+      <div class="results-grid" id="b-result-cards"></div>
+      <div id="b-multi-units" style="display:none">
+        <div class="divider"></div>
+        <div class="card-title">Per-unit breakdown</div>
+        <div id="b-per-unit-grid"></div>
+      </div>
+      <div class="divider"></div>
+      <div class="card-title">Profit margin</div>
+      <div class="pm-row"><span>0%</span><span>10%</span><span>20%</span><span>30%</span><span>40%+</span></div>
+      <div class="fbar"><div class="ffill" id="b-margin-bar"></div></div>
+      <div class="note" id="b-margin-note" style="margin-top:6px"></div>
+      <div class="divider"></div>
+      <div class="card-title">Lot cost as % of total exit</div>
+      <div class="fbar"><div class="ffill" id="b-lot-bar"></div></div>
+      <div class="note" id="b-lot-note" style="margin-top:6px"></div>
+    </div>
+  </div>
+
+  <!-- ══════════ MARKET TRENDS ══════════ -->
+  <div id="market" class="tab-panel">
+
+    <div class="insight-bar" id="market-insight"></div>
+
+    <div class="yr-row" id="yr-btns"></div>
+    <div class="stat-grid" id="stat-grid"></div>
+
+    <div class="card">
+      <div class="card-title">Median sale price · detached new construction 2020–2025</div>
+      <div class="legend-row">
+        <span style="display:flex;align-items:center;gap:5px"><span class="leg-dot" style="background:#C0392B"></span>37207 median</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="leg-dot" style="background:#1a6b3c"></span>37206 median</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="leg-dot" style="background:#C0392B;opacity:.4"></span>37207 average</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="leg-dot" style="background:#1a6b3c;opacity:.4"></span>37206 average</span>
+      </div>
+      <div class="chart-wrap"><canvas id="priceChart" role="img" aria-label="Median and average sale price of detached new construction in 37207 and 37206 from 2020 to 2025.">37207 median: $447K to $647K. 37206 median: $564K to $1.11M.</canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Median $/sqft · detached new construction 2020–2025</div>
+      <div class="legend-row">
+        <span style="display:flex;align-items:center;gap:5px"><span class="leg-dot" style="background:#C0392B"></span>37207</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="leg-dot" style="background:#1a6b3c"></span>37206</span>
+      </div>
+      <div class="chart-wrap"><canvas id="psqftChart" role="img" aria-label="Median price per sqft of detached new construction in 37207 and 37206 from 2020 to 2025.">37207: $229 to $323/sqft. 37206: $232 to $362/sqft.</canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Sales volume · detached new construction 2020–2025</div>
+      <div class="legend-row">
+        <span style="display:flex;align-items:center;gap:5px"><span class="leg-dot" style="background:#C0392B"></span>37207 sales</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="leg-dot" style="background:#1a6b3c"></span>37206 sales</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="leg-dot" style="background:#B8860B"></span>37207 median DOM</span>
+        <span style="display:flex;align-items:center;gap:5px"><span class="leg-dot" style="background:#8B6914"></span>37206 median DOM</span>
+      </div>
+      <div class="chart-wrap"><canvas id="volChart" role="img" aria-label="Sales volume and median days on market of detached new construction in both zip codes 2020 to 2025.">37207 sales: 65 to 60. 37206 sales: 85 to 62.</canvas></div>
+    </div>
+
+    <div class="comparison-note" id="comp-note"></div>
+
+    <div class="note" style="margin-top:12px">Data: Realtracs MLS · Detached single family &amp; HPR-D · Year built within 1–2 years of close · East Nashville 37207 &amp; 37206 boundary · Closed 2020–2025. Information believed to be accurate but not guaranteed. © 2026 Realtracs, Inc.</div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo-block">
+      <img src="https://kvcore-library.s3.amazonaws.com/remax1stchoice8207/images/03b9616f75a8e185d56a93c799829fdf.png" alt="RE/MAX 1st Choice">
+      <p>East Nashville new construction data sourced from Realtracs MLS. All projections are estimates based on market data and are not guaranteed. This tool does not constitute financial, tax, or investment advice.</p>
+    </div>
+    <div class="footer-cta-block">
+      <h3>Shopping East Nashville?</h3>
+      <p>Whether you're investing in 37207 or 37206 — let's talk through the numbers before you commit.</p>
+      <a href="https://the-jason-kaczmarski-team-springfield-tn.remax.com/ask/9539cc58d5c28bd9c77d6755120798e0" class="footer-cta-btn" target="_blank" rel="noopener">Talk to Jason → Free consultation</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>Jason Kaczmarski · RE/MAX 1st Choice · jasonk@realtracs.com · (615) 587-7888</span>
+    <span>© 2026 Realtracs, Inc. · Report Date: 4/17/26</span>
+  </div>
+</footer>
+
+<script>
+// ══════════ DATA ══════════
+var YEARS=['2020','2021','2022','2023','2024','2025'];
+
+var DATA={
+  '37207':{
+    medPrice:[447000,502500,695000,523750,598950,646900],
+    avgPrice:[452297,559022,759081,607475,673312,751876],
+    medPsqft:[229,256,332,286,309,323],
+    sales:[65,51,27,51,82,60],
+    medDOM:[9,0,1,0,15,13],
+    priceRange:['$339K–$670K','$350K–$1.16M','$446K–$1.05M','$330K–$1.5M','$349K–$1.51M','$380K–$1.45M'],
+    ctx2025:{med:'$647K',psqft:'$323/sqft',sales:'60',dom:'13 days'},
+    insight:'<strong>37207 detached new construction · 2020–2025.</strong> Median sale prices grew from <strong>$447K in 2020</strong> to <strong>$647K in 2025</strong> — a 45% increase over five years. Median $/sqft climbed from $229 to $323, up 41%. The 2022 spike (27 sales, $695K median) reflects a small, high-end sample weighted toward Cleveland Park — interpret that year with caution. Volume recovered strongly in 2024–2025.',
+    medPsqftLatest:323,
+    note2022:'Low 2022 volume (27 sales) reflects rate-environment pullback and a filter window weighted toward larger Cleveland Park product. Interpret the 2022 median with caution.'
+  },
+  '37206':{
+    medPrice:[564170,655250,850000,910000,810000,1112500],
+    avgPrice:[560130,699015,929319,1024682,921157,1117700],
+    medPsqft:[232,273,326,329,330,362],
+    sales:[85,100,100,100,91,62],
+    medDOM:[12,8,2,17,22,17],
+    priceRange:['$353K–$1.18M','$369K–$1.77M','$450K–$2.25M','$350K–$3.0M','$560K–$2.25M','$499K–$2.2M'],
+    ctx2025:{med:'$1.11M',psqft:'$362/sqft',sales:'62',dom:'17 days'},
+    insight:'<strong>37206 detached new construction · 2020–2025.</strong> The most price-appreciated new construction zip in Middle Tennessee. Median sale prices climbed from <strong>$564K in 2020</strong> to <strong>$1.11M in 2025</strong> — a 97% increase over five years. Median $/sqft rose from $232 to $362, up 56%. Volume has been consistently strong, with 85–100 closings annually through 2024. Lockeland Springs, Shelby Hills, and Rosebank/Fortland Park drive the upper tier.',
+    medPsqftLatest:362,
+    note2022:''
+  }
+};
+
+var activeZip='37207';
+var zoneA='rs', zoneB='rs';
+var selYear=5;
+
+// ══════════ ZIP SWITCH ══════════
+function setZip(z,el){
+  document.querySelectorAll('.zip-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-pressed','false');});
+  el.classList.add('active');el.setAttribute('aria-pressed','true');
+  activeZip=z;
+  updateCtxStrip();
+  updateInsight();
+  updateStats();
+  refreshCharts();
+  calcA();calcB();
+}
+
+function updateCtxStrip(){
+  var d=DATA[activeZip];
+  var c=d.ctx2025;
+  document.getElementById('ctx-label').textContent=activeZip+' · East Nashville · 2025 snapshot (detached new construction)';
+  document.getElementById('ctx-stats').innerHTML=
+    '<div class="zip-stat"><span class="zip-stat-val">'+c.med+'</span><span class="zip-stat-lbl">2025 median sale</span></div>'+
+    '<div class="zip-stat"><span class="zip-stat-val">'+c.psqft+'</span><span class="zip-stat-lbl">2025 median $/sqft</span></div>'+
+    '<div class="zip-stat"><span class="zip-stat-val">'+c.sales+'</span><span class="zip-stat-lbl">2025 closed sales</span></div>'+
+    '<div class="zip-stat"><span class="zip-stat-val">'+c.dom+'</span><span class="zip-stat-lbl">2025 median DOM</span></div>';
+}
+
+// ══════════ UTILS ══════════
+function fmtM(el){var r=el.value.replace(/[^0-9]/g,'');if(!r){el.value='';return;}el.value='$'+parseInt(r,10).toLocaleString();}
+function parsM(s){return parseInt((s||'').replace(/[^0-9]/g,''),10)||0;}
+function fmt(n){return'$'+Math.round(n).toLocaleString();}
+function fmtPct(n){return(Math.round(n*10)/10)+'%';}
+
+// ══════════ ZONE TOGGLE ══════════
+function setZone(z,el,side){
+  var px=side==='a'?'a':'b';
+  el.parentElement.querySelectorAll('.z-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  if(side==='a')zoneA=z;else zoneB=z;
+  var sp=document.getElementById(px+'-sp-notice');
+  var ur=document.getElementById(px+'-units-row');
+  var iq=document.getElementById(px+'-identical-q');
+  var ul=document.getElementById(px+'-units-lbl');
+  var ui=document.getElementById(px+'-units');
+  sp.style.display=(z==='sp')?'block':'none';
+  var show=(z==='r'||z==='mul'||z==='sp');
+  ur.style.display=show?'flex':'none';
+  iq.style.display=show?'block':'none';
+  if(z==='r'){ui.value=2;ui.min=2;ul.textContent='Number of units planned:';}
+  if(z==='mul'){ui.min=3;if(parseInt(ui.value)<3)ui.value=3;ul.textContent='Number of units planned:';}
+  if(z==='sp'){ui.min=2;ul.textContent='Projected units (pending approval):';}
+  if(side==='a')calcA();else calcB();
+}
+
+// ══════════ TABS ══════════
+function switchTab(id,el){
+  document.querySelectorAll('.tab-btn').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false');});
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');el.setAttribute('aria-selected','true');
+  document.getElementById(id).classList.add('active');
+}
+
+// ══════════ CALC A ══════════
+function calcA(){
+  var d=DATA[activeZip];
+  var lot=parsM(document.getElementById('a-lot').value);
+  var sqft=parseInt(document.getElementById('a-sqft').value);
+  var bpsf=parseInt(document.getElementById('a-bpsf').value);
+  var sellPct=parseFloat(document.getElementById('a-sell').value)/100;
+  var profitPct=parseFloat(document.getElementById('a-profit').value)/100;
+  var units=(zoneA==='rs')?1:Math.max(1,parseInt(document.getElementById('a-units').value)||1);
+
+  document.getElementById('a-sqft-val').textContent=sqft.toLocaleString()+' sqft';
+  document.getElementById('a-bpsf-val').textContent='$'+bpsf+' / sqft';
+  document.getElementById('a-sell-val').textContent=fmtPct(parseFloat(document.getElementById('a-sell').value));
+  document.getElementById('a-profit-val').textContent=fmtPct(parseFloat(document.getElementById('a-profit').value));
+  document.getElementById('a-sqft-bubble').style.display=sqft>3000?'block':'none';
+  document.getElementById('a-bpsf-bubble').style.display=bpsf>250?'block':'none';
+
+  var lotPU=lot/units,buildPU=sqft*bpsf,allInPU=lotPU+buildPU;
+  var totalAllIn=allInPU*units;
+  var exitPU=allInPU/(1-sellPct-profitPct);
+  var totalExit=exitPU*units;
+  var sellCPU=exitPU*sellPct,profPU=exitPU*profitPct;
+  var epsf=exitPU/sqft;
+  var ul=units>1?' / unit':'';
+
+  var lines=[
+    {l:'Lot / teardown cost',v:fmt(lot)},
+    units>1?{l:'Land per unit (÷'+units+')',v:fmt(lotPU)}:null,
+    {l:'Construction ('+sqft.toLocaleString()+' sqft × $'+bpsf+'/sqft)'+ul,v:fmt(buildPU)},
+    {l:'Total all-in cost per unit',v:fmt(allInPU),bold:true},
+    units>1?{l:'Total all-in ('+units+' units)',v:fmt(totalAllIn),bold:true}:null,
+    {l:'Selling costs ('+fmtPct(parseFloat(document.getElementById('a-sell').value))+')'+ul,v:fmt(sellCPU)},
+    {l:'Profit target ('+fmtPct(parseFloat(document.getElementById('a-profit').value))+')'+ul,v:fmt(profPU)},
+  ].filter(Boolean);
+  document.getElementById('a-cost-lines').innerHTML=lines.map(l=>'<div class="cost-line'+(l.bold?' bold':'')+'"><span>'+l.l+'</span><span>'+l.v+'</span></div>').join('');
+
+  document.getElementById('a-min-price').textContent=units>1?fmt(exitPU)+' / unit':fmt(exitPU);
+  document.getElementById('a-min-sub').textContent=units>1?'Total project exit: '+fmt(totalExit)+' across '+units+' units':'Sell above this to hit a '+fmtPct(parseFloat(document.getElementById('a-profit').value))+' margin';
+  document.getElementById('a-allin').textContent=fmt(allInPU);
+  document.getElementById('a-allin-sub').textContent=units>1?'Total: '+fmt(totalAllIn):'Lot + construction';
+  document.getElementById('a-sellc').textContent=fmt(sellCPU);
+  document.getElementById('a-sellc-sub').textContent=fmtPct(parseFloat(document.getElementById('a-sell').value))+' of exit'+(units>1?' per unit':'');
+  document.getElementById('a-profd').textContent=units>1?fmt(profPU)+' / unit':fmt(profPU);
+  var epsfR=Math.round(epsf);
+  var med=d.medPsqftLatest;
+  var diff=epsfR-med;
+  document.getElementById('a-epsf').textContent='$'+epsfR+' / sqft';
+  document.getElementById('a-epsf-ctx').textContent=diff>=0?'$'+epsfR+'/sqft — $'+diff+' above '+activeZip+' 2025 median ($'+med+'/sqft)':'$'+epsfR+'/sqft — $'+Math.abs(diff)+' below '+activeZip+' 2025 median ($'+med+'/sqft)';
+
+  var lotPct=lot/totalExit*100;
+  document.getElementById('a-lot-bar').style.width=Math.min(lotPct,100)+'%';
+  document.getElementById('a-lot-bar').style.background=lotPct<=20?'#1a6b3c':lotPct<=30?'#B8860B':'#C0392B';
+  document.getElementById('a-lot-note').innerHTML=lotPct<=20?'<strong>'+fmtPct(lotPct)+' of total exit</strong> — within the investor rule of thumb (≤20%). This lot cost pencils well.':lotPct<=30?'<strong>'+fmtPct(lotPct)+' of total exit</strong> — slightly above the 20% rule. Tighter margin for error; consider negotiating the acquisition price.':'<strong>'+fmtPct(lotPct)+' of total exit</strong> — above 30%. Many investors would pass. The lot cost or exit price likely needs to move.';
+}
+
+// ══════════ CALC B ══════════
+function calcB(){
+  var d=DATA[activeZip];
+  var lot=parsM(document.getElementById('b-lot').value);
+  var sqft=parseInt(document.getElementById('b-sqft').value)||1800;
+  var bpsf=parseInt(document.getElementById('b-bpsf').value)||175;
+  var salePU=parsM(document.getElementById('b-sale').value);
+  var sellPct=parseFloat(document.getElementById('b-sell').value)/100;
+  var units=(zoneB==='rs')?1:Math.max(1,parseInt(document.getElementById('b-units').value)||1);
+
+  document.getElementById('b-sell-val').textContent=fmtPct(parseFloat(document.getElementById('b-sell').value));
+  document.getElementById('b-bpsf-bubble').style.display=bpsf>250?'block':'none';
+
+  var lotPU=lot/units,buildPU=sqft*bpsf,allInPU=lotPU+buildPU;
+  var totalAllIn=allInPU*units,totalExit=salePU*units;
+  var sellCPU=salePU*sellPct,profPU=salePU-allInPU-sellCPU,totalProfit=profPU*units;
+  var marginPct=salePU>0?(profPU/salePU)*100:0;
+  var roi=allInPU>0?(profPU/allInPU)*100:0;
+  var epsf=salePU>0?salePU/sqft:0;
+  var good=marginPct>=15,warn=marginPct>=8&&marginPct<15,bad=marginPct<8;
+  var cc=good?'good':warn?'warn':'bad';
+  var ul=units>1?' / unit':'';
+  var med=d.medPsqftLatest;
+
+  var lines=[
+    {l:'Lot / teardown cost',v:fmt(lot)},
+    units>1?{l:'Land per unit (÷'+units+')',v:fmt(lotPU)}:null,
+    {l:'Construction ('+sqft.toLocaleString()+' sqft × $'+bpsf+'/sqft)'+ul,v:fmt(buildPU)},
+    {l:'Total all-in cost per unit',v:fmt(allInPU),bold:true},
+    units>1?{l:'Total all-in ('+units+' units)',v:fmt(totalAllIn),bold:true}:null,
+    {l:'Selling costs ('+fmtPct(parseFloat(document.getElementById('b-sell').value))+')'+ul,v:fmt(sellCPU)},
+    {l:'Expected sale price'+ul,v:fmt(salePU)},
+  ].filter(Boolean);
+  document.getElementById('b-cost-lines').innerHTML=lines.map(l=>'<div class="cost-line'+(l.bold?' bold':'')+'"><span>'+l.l+'</span><span>'+l.v+'</span></div>').join('');
+
+  var epsfR=Math.round(epsf);
+  var mktCtx=epsfR>=med?'$'+epsfR+'/sqft — above '+activeZip+' 2025 median ($'+med+'/sqft)':'$'+epsfR+'/sqft — below '+activeZip+' 2025 median ($'+med+'/sqft)';
+
+  document.getElementById('b-result-cards').innerHTML=
+    '<div class="rc highlight span2"><div class="rc-label">'+(units>1?'Profit per unit':'Net profit')+'</div><div class="rc-val">'+fmt(profPU)+'</div><div class="rc-sub">'+(units>1?'Total project profit: '+fmt(totalProfit)+' across '+units+' units':'After all costs &amp; selling fees')+'</div></div>'+
+    '<div class="rc '+cc+'"><div class="rc-label">Profit margin</div><div class="rc-val">'+fmtPct(marginPct)+'</div><div class="rc-sub">Of sale price</div></div>'+
+    '<div class="rc"><div class="rc-label">Return on cost</div><div class="rc-val">'+fmtPct(roi)+'</div><div class="rc-sub">Profit ÷ all-in cost</div></div>'+
+    '<div class="rc"><div class="rc-label">Sale price / sqft</div><div class="rc-val">$'+epsfR+' / sqft</div><div class="rc-sub">'+mktCtx+'</div></div>'+
+    '<div class="rc"><div class="rc-label">'+(units>1?'Total exit value':'Exit price')+'</div><div class="rc-val">'+fmt(totalExit)+'</div><div class="rc-sub">'+(units>1?units+' units × '+fmt(salePU):'Expected sale price')+'</div></div>';
+
+  var bw=Math.min(Math.max(marginPct,0),40)/40*100;
+  document.getElementById('b-margin-bar').style.width=bw+'%';
+  document.getElementById('b-margin-bar').style.background=good?'#1a6b3c':warn?'#B8860B':'#C0392B';
+  document.getElementById('b-margin-note').innerHTML=bad?'<strong>'+fmtPct(marginPct)+'</strong> — below 8%. Most investors would pass. Consider negotiating the lot price, reducing build specs, or targeting a higher exit.':warn?'<strong>'+fmtPct(marginPct)+'</strong> — thin but potentially workable. Limited buffer for cost overruns or market softening.':'<strong>'+fmtPct(marginPct)+'</strong> — solid margin. This deal pencils well at these inputs. Verify with a licensed builder before committing.';
+
+  var lotPct=totalExit>0?lot/totalExit*100:0;
+  document.getElementById('b-lot-bar').style.width=Math.min(lotPct,100)+'%';
+  document.getElementById('b-lot-bar').style.background=lotPct<=20?'#1a6b3c':lotPct<=30?'#B8860B':'#C0392B';
+  document.getElementById('b-lot-note').innerHTML=lotPct<=20?'<strong>'+fmtPct(lotPct)+' of total exit</strong> — within the investor rule of thumb (≤20%).':lotPct<=30?'<strong>'+fmtPct(lotPct)+' of total exit</strong> — slightly above the 20% rule. Tighter margin of error on the acquisition.':'<strong>'+fmtPct(lotPct)+' of total exit</strong> — above 30%. Many investors would want the lot price down or the exit price up.';
+
+  var ms=document.getElementById('b-multi-units');
+  ms.style.display=units>1?'block':'none';
+  if(units>1){
+    var rows='';
+    for(var i=1;i<=Math.min(units,12);i++)rows+='<div class="pug"><div class="pug-val">'+fmt(profPU)+'</div><div class="pug-lbl">Unit '+i+'</div></div>';
+    if(units>12)rows+='<div class="pug" style="grid-column:1/-1"><div class="pug-lbl" style="font-size:12px">+ '+(units-12)+' additional units · same per-unit figures apply</div></div>';
+    document.getElementById('b-per-unit-grid').innerHTML='<div class="per-unit-grid">'+rows+'</div>';
+  }
+}
+
+// ══════════ MARKET ══════════
+function updateInsight(){
+  document.getElementById('market-insight').innerHTML=DATA[activeZip].insight;
+}
+
+function updateStats(){
+  var d=DATA[activeZip];
+  var i=selYear;
+  document.getElementById('stat-grid').innerHTML=
+    '<div class="stat-pill"><div class="sp-val">'+d.sales[i]+'</div><div class="sp-lbl">Closed sales</div></div>'+
+    '<div class="stat-pill"><div class="sp-val">$'+Math.round(d.medPrice[i]/1000)+'K</div><div class="sp-lbl">Median sale price</div></div>'+
+    '<div class="stat-pill"><div class="sp-val">$'+d.medPsqft[i]+'/sqft</div><div class="sp-lbl">Median $/sqft</div></div>'+
+    '<div class="stat-pill"><div class="sp-val">'+d.medDOM[i]+' days</div><div class="sp-lbl">Median DOM</div></div>'+
+    '<div class="stat-pill"><div class="sp-val">$'+Math.round(d.avgPrice[i]/1000)+'K</div><div class="sp-lbl">Average sale price</div></div>'+
+    '<div class="stat-pill"><div class="sp-val" style="font-size:13px">'+d.priceRange[i]+'</div><div class="sp-lbl">Price range</div></div>';
+
+  var n7=DATA['37207'],n6=DATA['37206'];
+  var gap=Math.round((n6.medPrice[i]-n7.medPrice[i])/1000);
+  var gapPct=Math.round((n6.medPrice[i]-n7.medPrice[i])/n7.medPrice[i]*100);
+  document.getElementById('comp-note').innerHTML=
+    '<strong>'+YEARS[i]+' zip code comparison.</strong> In '+YEARS[i]+', the 37206 median ($'+Math.round(n6.medPrice[i]/1000)+'K) ran $'+gap+'K / '+gapPct+'% above the 37207 median ($'+Math.round(n7.medPrice[i]/1000)+'K). $/sqft gap: 37206 at $'+n6.medPsqft[i]+'/sqft vs. 37207 at $'+n7.medPsqft[i]+'/sqft.'+(DATA[activeZip].note2022&&i===2?' <em>Note: '+DATA[activeZip].note2022+'</em>':'');
+}
+
+// ══════════ YEAR BUTTONS ══════════
+function buildYrBtns(){
+  var wrap=document.getElementById('yr-btns');
+  wrap.innerHTML='';
+  YEARS.forEach(function(y,i){
+    var b=document.createElement('button');
+    b.className='yr-btn'+(i===5?' active':'');
+    b.textContent=y;
+    b.onclick=function(){
+      selYear=i;
+      document.querySelectorAll('.yr-btn').forEach(function(x){x.classList.remove('active');});
+      b.classList.add('active');
+      updateStats();
+    };
+    wrap.appendChild(b);
+  });
+}
+
+// ══════════ CHARTS ══════════
+var charts={};
+var GC='rgba(0,0,0,.04)',TC='#6b6860';
+
+function buildCharts(){
+  var baseO={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:GC},ticks:{font:{size:11},color:TC}},y:{grid:{color:GC},ticks:{font:{size:11},color:TC}}}};
+
+  var n7=DATA['37207'],n6=DATA['37206'];
+
+  if(charts.price)charts.price.destroy();
+  charts.price=new Chart(document.getElementById('priceChart'),{
+    type:'line',
+    data:{labels:YEARS,datasets:[
+      {label:'37207 median',data:n7.medPrice,borderColor:'#C0392B',backgroundColor:'rgba(192,57,43,.06)',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#C0392B',tension:.3,fill:true},
+      {label:'37206 median',data:n6.medPrice,borderColor:'#1a6b3c',backgroundColor:'rgba(26,107,60,.06)',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#1a6b3c',tension:.3,fill:true},
+      {label:'37207 avg',data:n7.avgPrice,borderColor:'rgba(192,57,43,.4)',backgroundColor:'transparent',borderWidth:1.5,pointRadius:3,borderDash:[5,4],tension:.3},
+      {label:'37206 avg',data:n6.avgPrice,borderColor:'rgba(26,107,60,.4)',backgroundColor:'transparent',borderWidth:1.5,pointRadius:3,borderDash:[5,4],tension:.3},
+    ]},
+    options:{...baseO,scales:{...baseO.scales,y:{...baseO.scales.y,ticks:{...baseO.scales.y.ticks,callback:function(v){return'$'+Math.round(v/1000)+'K';}}}}}
+  });
+
+  if(charts.psqft)charts.psqft.destroy();
+  charts.psqft=new Chart(document.getElementById('psqftChart'),{
+    type:'line',
+    data:{labels:YEARS,datasets:[
+      {label:'37207 $/sqft',data:n7.medPsqft,borderColor:'#C0392B',backgroundColor:'rgba(192,57,43,.06)',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#C0392B',tension:.3,fill:true},
+      {label:'37206 $/sqft',data:n6.medPsqft,borderColor:'#1a6b3c',backgroundColor:'rgba(26,107,60,.06)',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#1a6b3c',tension:.3,fill:true},
+    ]},
+    options:{...baseO,scales:{...baseO.scales,y:{...baseO.scales.y,ticks:{...baseO.scales.y.ticks,callback:function(v){return'$'+v+'/sf';}}}}}
+  });
+
+  if(charts.vol)charts.vol.destroy();
+  charts.vol=new Chart(document.getElementById('volChart'),{
+    type:'bar',
+    data:{labels:YEARS,datasets:[
+      {label:'37207 sales',data:n7.sales,backgroundColor:'rgba(192,57,43,.75)',borderRadius:3,yAxisID:'y'},
+      {label:'37206 sales',data:n6.sales,backgroundColor:'rgba(26,107,60,.75)',borderRadius:3,yAxisID:'y'},
+      {label:'37207 DOM',data:n7.medDOM,type:'line',borderColor:'#B8860B',backgroundColor:'transparent',borderWidth:2,pointRadius:4,pointBackgroundColor:'#B8860B',yAxisID:'y2',tension:.3},
+      {label:'37206 DOM',data:n6.medDOM,type:'line',borderColor:'#8B6914',backgroundColor:'transparent',borderWidth:2,pointRadius:4,pointBackgroundColor:'#8B6914',borderDash:[4,3],yAxisID:'y2',tension:.3},
+    ]},
+    options:{...baseO,scales:{
+      x:{grid:{color:GC},ticks:{font:{size:11},color:TC}},
+      y:{grid:{color:GC},ticks:{font:{size:11},color:TC},title:{display:true,text:'Sales count',font:{size:10},color:TC}},
+      y2:{position:'right',grid:{display:false},ticks:{font:{size:11},color:'#B8860B'},title:{display:true,text:'Median DOM',font:{size:10},color:'#B8860B'},min:0}
+    }}
+  });
+}
+
+function refreshCharts(){buildCharts();}
+
+// ══════════ INIT ══════════
+updateCtxStrip();
+updateInsight();
+buildYrBtns();
+updateStats();
+buildCharts();
+calcA();
+calcB();
+</script>
+</body>
+</html>
