@@ -48,52 +48,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .sc-title{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:7px;}
 .sc-body{padding:16px;}
 
-.field{margin-bottom:12px;}
-.field:last-child{margin-bottom:0;}
-.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:500;}
-.finput{width:100%;border:1px solid var(--border);border-radius:6px;padding:9px 12px;font-size:14px;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);transition:border-color .15s,background .3s;}
-.finput:focus{outline:none;border-color:#999;}
-.finput.flash{background:#fff8e6;}
-.input-prefix{position:relative;display:block;}
-.input-prefix span{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none;}
-.input-prefix input{padding-left:22px;}
-.input-suffix-wrap{display:flex;gap:8px;align-items:center;}
-.hint{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.45;}
-
-.sl{margin-bottom:14px;}
-.sl:last-child{margin-bottom:0;}
-.sl-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;}
-.sl-name{font-size:13px;color:var(--text);}
-.sl-badge{background:var(--dark);color:#fff;padding:3px 9px;border-radius:4px;font-size:12px;font-weight:600;}
-input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
-.sl-range{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:2px;}
-
-.zone-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-.z-btn{padding:9px 12px;border-radius:7px;border:1.5px solid var(--border);font-size:12px;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--muted);font-weight:500;transition:all .15s;text-align:left;display:flex;align-items:center;gap:7px;}
-.z-btn:hover{border-color:#999;color:var(--text);}
-.z-btn.active{background:var(--red);color:#fff;border-color:var(--red);}
-.z-btn.sp-btn.active{background:var(--navy);border-color:var(--navy);}
-.z-radio{width:14px;height:14px;border-radius:50%;border:2px solid currentColor;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-.z-btn.active .z-radio::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;}
-.z-label{line-height:1.25;}
-.z-code{font-weight:600;display:block;font-size:12px;}
-.z-desc{font-size:10px;opacity:.8;}
-
-.toggle-row{display:flex;align-items:center;gap:10px;}
-.toggle-label-txt{font-size:13px;color:var(--muted);}
-.toggle{position:relative;width:40px;height:22px;cursor:pointer;flex-shrink:0;}
-.toggle input{opacity:0;width:0;height:0;position:absolute;}
-.toggle-track{position:absolute;inset:0;background:var(--border);border-radius:11px;transition:background .2s;}
-.toggle input:checked+.toggle-track{background:var(--red);}
-.toggle-thumb{position:absolute;left:3px;top:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
-.toggle input:checked~.toggle-thumb{transform:translateX(18px);}
-
-.zip-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
-.zip-pill{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);font-size:12px;font-weight:600;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--muted);transition:all .15s;letter-spacing:.02em;}
+/* ZIP GROUPED SELECTOR */
+.zip-area-group{margin-bottom:12px;}
+.zip-area-group:last-child{margin-bottom:0;}
+.zip-area-label{font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block;}
+.zip-pills{display:flex;gap:6px;flex-wrap:wrap;}
+.zip-pill{padding:6px 13px;border-radius:20px;border:1.5px solid var(--border);font-size:12px;font-weight:600;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--muted);transition:all .15s;letter-spacing:.02em;}
 .zip-pill.active{background:var(--red);color:#fff;border-color:var(--red);}
 .zip-pill:hover:not(.active){border-color:#999;color:var(--text);}
+.zip-meta{font-size:11px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
 
-/* market context */
+/* MKT CONTEXT */
 .mkt-ctx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
 .mkt-ctx-cell{background:var(--surface);border-radius:7px;padding:10px 12px;text-align:center;}
 .mkt-ctx-val{font-size:17px;font-weight:600;color:var(--red);}
@@ -108,17 +73,62 @@ input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
 .psqft-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
 .psqft-bar-row:last-child{margin-bottom:0;}
 .psqft-zip{font-size:11px;color:var(--muted);width:36px;flex-shrink:0;}
-.psqft-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+.psqft-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden;}
 .psqft-fill{height:100%;border-radius:4px;}
 .psqft-val{font-size:11px;font-weight:600;width:52px;text-align:right;flex-shrink:0;}
-.defaults-notice{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--green);background:var(--green-light);border:1px solid #b8ddc9;border-radius:6px;padding:7px 11px;margin-top:10px;}
+.defaults-notice{display:none;align-items:center;gap:6px;font-size:11px;color:var(--green);background:var(--green-light);border:1px solid #b8ddc9;border-radius:6px;padding:7px 11px;margin-top:10px;}
 
+/* FIELDS */
+.field{margin-bottom:12px;}
+.field:last-child{margin-bottom:0;}
+.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:500;}
+.finput{width:100%;border:1px solid var(--border);border-radius:6px;padding:9px 12px;font-size:14px;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);transition:border-color .15s,background .3s;}
+.finput:focus{outline:none;border-color:#999;}
+.finput.flash{background:#fff8e6;}
+.input-prefix{position:relative;display:block;}
+.input-prefix span{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none;}
+.input-prefix input{padding-left:22px;}
+.input-suffix-wrap{display:flex;gap:8px;align-items:center;}
+.hint{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.45;}
+
+/* SLIDERS */
+.sl{margin-bottom:14px;}
+.sl:last-child{margin-bottom:0;}
+.sl-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;}
+.sl-name{font-size:13px;color:var(--text);}
+.sl-badge{background:var(--dark);color:#fff;padding:3px 9px;border-radius:4px;font-size:12px;font-weight:600;}
+input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
+.sl-range{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* ZONING */
+.zone-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.z-btn{padding:9px 12px;border-radius:7px;border:1.5px solid var(--border);font-size:12px;background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--muted);font-weight:500;transition:all .15s;text-align:left;display:flex;align-items:center;gap:7px;}
+.z-btn:hover{border-color:#999;color:var(--text);}
+.z-btn.active{background:var(--red);color:#fff;border-color:var(--red);}
+.z-btn.sp-btn.active{background:var(--navy);border-color:var(--navy);}
+.z-radio{width:14px;height:14px;border-radius:50%;border:2px solid currentColor;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.z-btn.active .z-radio::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;}
+.z-label{line-height:1.25;}
+.z-code{font-weight:600;display:block;font-size:12px;}
+.z-desc{font-size:10px;opacity:.8;}
+
+/* TOGGLE */
+.toggle-row{display:flex;align-items:center;gap:10px;}
+.toggle-label-txt{font-size:13px;color:var(--muted);}
+.toggle{position:relative;width:40px;height:22px;cursor:pointer;flex-shrink:0;}
+.toggle input{opacity:0;width:0;height:0;position:absolute;}
+.toggle-track{position:absolute;inset:0;background:var(--border);border-radius:11px;transition:background .2s;}
+.toggle input:checked+.toggle-track{background:var(--red);}
+.toggle-thumb{position:absolute;left:3px;top:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.toggle input:checked~.toggle-thumb{transform:translateX(18px);}
+
+/* BUBBLES */
 .bubble{border-radius:6px;padding:8px 12px;font-size:12px;margin-top:8px;line-height:1.55;}
 .bubble.amber{background:#fff8e6;border:1px solid #e8c97e;color:#6b4e00;}
 .bubble.danger{background:var(--red-light);border:1px solid #f5c6c0;color:var(--red-dark);}
 .bubble.navy{background:var(--navy-light);border:1px solid #c5d3f0;color:var(--navy);}
 
-/* viability card */
+/* VIABILITY CARD */
 .viability-card{background:var(--dark);border-radius:10px;padding:20px;border:1px solid #333;}
 .vc-title{font-size:13px;color:rgba(255,255,255,.45);margin-bottom:2px;}
 .vc-sub{font-size:11px;color:rgba(255,255,255,.28);margin-bottom:16px;}
@@ -168,7 +178,7 @@ input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
 .notify-status{font-size:11px;text-align:center;margin-top:5px;min-height:16px;}
 .pdf-disclaimer{font-size:10px;color:rgba(255,255,255,.22);margin-top:6px;text-align:center;line-height:1.5;}
 
-/* market trends collapsible */
+/* MARKET TRENDS */
 .mkt-toggle{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;cursor:pointer;user-select:none;background:var(--surface);border-bottom:1px solid var(--border);}
 .mkt-toggle-lbl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
 .mkt-arrow{font-size:12px;color:var(--muted);transition:transform .22s;}
@@ -184,12 +194,13 @@ input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
 .ms{background:var(--surface);border-radius:7px;padding:9px 11px;}
 .ms-val{font-size:15px;font-weight:600;color:var(--red);}
 .ms-lbl{font-size:10px;color:var(--muted);margin-top:1px;}
-.chart-wrap{position:relative;width:100%;height:220px;margin-bottom:10px;}
-.leg-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:7px;font-size:11px;color:var(--muted);}
+.chart-wrap{position:relative;width:100%;height:240px;margin-bottom:14px;}
+.leg-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:7px;font-size:11px;color:var(--muted);}
 .leg-dot{width:9px;height:9px;border-radius:2px;display:inline-block;flex-shrink:0;}
 .comp-note{background:var(--surface);border-radius:6px;padding:10px 12px;font-size:11px;color:var(--muted);line-height:1.6;margin-top:10px;}
 .comp-note strong{color:var(--text);}
 
+/* FOOTER */
 .footer{background:var(--dark);border-top:3px solid var(--red);padding:32px 20px;}
 .footer-in{max-width:1040px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;}
 .footer-logo{height:32px;margin-bottom:8px;display:block;}
@@ -240,11 +251,14 @@ input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
       <div class="sc">
         <div class="sc-head"><div class="sc-title"><span>📍</span> Market</div></div>
         <div class="sc-body">
-          <div class="zip-pills" id="zip-pills"></div>
-          <div class="mkt-ctx-grid" id="mkt-ctx-grid"></div>
-          <div class="mkt-trend-row" id="mkt-trend-row"></div>
-          <div class="psqft-compare" id="psqft-compare"></div>
-          <div class="defaults-notice" id="defaults-notice" style="display:none">
+          <div id="zip-groups"></div>
+          <div class="zip-meta" id="zip-meta"></div>
+          <div style="margin-top:14px;">
+            <div class="mkt-ctx-grid" id="mkt-ctx-grid"></div>
+            <div class="mkt-trend-row" id="mkt-trend-row"></div>
+            <div class="psqft-compare" id="psqft-compare"></div>
+          </div>
+          <div class="defaults-notice" id="defaults-notice">
             <span>✓</span><span id="defaults-notice-txt"></span>
           </div>
         </div>
@@ -256,10 +270,7 @@ input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
         <div class="sc-body">
           <div class="field">
             <label>Land / teardown cost</label>
-            <div class="input-prefix">
-              <span>$</span>
-              <input class="finput" type="text" id="lot" value="400,000" oninput="fmtM(this);calc()">
-            </div>
+            <div class="input-prefix"><span>$</span><input class="finput" type="text" id="lot" value="400,000" oninput="fmtM(this);calc()"></div>
           </div>
           <div class="field" style="margin-bottom:0">
             <label>Zoning &amp; density</label>
@@ -276,11 +287,7 @@ input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
                 <input class="finput" type="number" id="units" value="2" min="2" max="50" oninput="calc()" style="width:80px;">
               </div>
               <div class="toggle-row">
-                <label class="toggle">
-                  <input type="checkbox" id="similar-toggle" checked onchange="calc()">
-                  <div class="toggle-track"></div>
-                  <div class="toggle-thumb"></div>
-                </label>
+                <label class="toggle"><input type="checkbox" id="similar-toggle" checked onchange="calc()"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
                 <span class="toggle-label-txt">Build similar / identical homes</span>
               </div>
               <div class="bubble amber" style="margin-top:8px;">Cost and revenue split equally across all units. Model differently sized units separately.</div>
@@ -291,10 +298,7 @@ input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
 
       <!-- 3. CONSTRUCTION & RESALE -->
       <div class="sc">
-        <div class="sc-head">
-          <div class="sc-title"><span>📐</span> Construction &amp; resale</div>
-          <div style="font-size:11px;color:var(--muted)">per unit</div>
-        </div>
+        <div class="sc-head"><div class="sc-title"><span>📐</span> Construction &amp; resale</div><div style="font-size:11px;color:var(--muted)">per unit</div></div>
         <div class="sc-body">
           <div class="sl">
             <div class="sl-top"><span class="sl-name">Planned size (sq ft)</span><span class="sl-badge" id="sqft-badge">1,800 sf</span></div>
@@ -311,10 +315,7 @@ input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
           <div class="field">
             <label>Projected resale price per unit</label>
             <div class="input-suffix-wrap">
-              <div class="input-prefix" style="flex:1">
-                <span>$</span>
-                <input class="finput" type="text" id="resale" value="647,000" oninput="resaleChanged('total');calc()">
-              </div>
+              <div class="input-prefix" style="flex:1"><span>$</span><input class="finput" type="text" id="resale" value="647,000" oninput="resaleChanged('total');calc()"></div>
               <div style="color:var(--muted);font-size:11px;font-weight:500;">@</div>
               <div style="display:flex;align-items:center;gap:4px;width:110px;">
                 <span style="font-size:12px;color:var(--muted)">$</span>
@@ -326,10 +327,7 @@ input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
           </div>
           <div class="field" style="margin-bottom:0">
             <label>Additional soft costs per unit <span style="font-weight:400;color:var(--muted)">(holding, permits, insurance, contingency)</span></label>
-            <div class="input-prefix">
-              <span>$</span>
-              <input class="finput" type="text" id="softcosts" value="15,000" oninput="fmtM(this);calc()">
-            </div>
+            <div class="input-prefix"><span>$</span><input class="finput" type="text" id="softcosts" value="15,000" oninput="fmtM(this);calc()"></div>
           </div>
         </div>
       </div>
@@ -349,25 +347,17 @@ input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
       <!-- 5. MARKET TRENDS -->
       <div class="sc">
         <div class="mkt-toggle" onclick="toggleMarket()" role="button" tabindex="0" id="mkt-btn" aria-expanded="false">
-          <span class="mkt-toggle-lbl">📈 Market trends 2020–2025 · <span id="mkt-zip-lbl">37207</span></span>
+          <span class="mkt-toggle-lbl">📈 Market trends 2020–2025 · <span id="mkt-zip-lbl">37206</span></span>
           <span class="mkt-arrow" id="mkt-arrow">▼</span>
         </div>
         <div class="mkt-body" id="mkt-body">
           <div class="insight" id="mkt-insight"></div>
           <div class="yr-row" id="yr-row"></div>
           <div class="mkt-stats" id="mkt-stats"></div>
-          <div class="leg-row">
-            <span style="display:flex;align-items:center;gap:4px"><span class="leg-dot" style="background:#C0392B"></span>37207</span>
-            <span style="display:flex;align-items:center;gap:4px"><span class="leg-dot" style="background:#1a6b3c"></span>37206</span>
-            <span style="display:flex;align-items:center;gap:4px"><span class="leg-dot" style="background:#C0392B;opacity:.4"></span>37207 avg</span>
-            <span style="display:flex;align-items:center;gap:4px"><span class="leg-dot" style="background:#1a6b3c;opacity:.4"></span>37206 avg</span>
-          </div>
-          <div class="chart-wrap"><canvas id="priceChart" role="img" aria-label="Median sale price Nashville zip codes 2020 to 2025">37207 $447K–$647K · 37206 $564K–$1.11M</canvas></div>
-          <div class="leg-row">
-            <span style="display:flex;align-items:center;gap:4px"><span class="leg-dot" style="background:#C0392B"></span>37207 $/sqft</span>
-            <span style="display:flex;align-items:center;gap:4px"><span class="leg-dot" style="background:#1a6b3c"></span>37206 $/sqft</span>
-          </div>
-          <div class="chart-wrap"><canvas id="psqftChart" role="img" aria-label="Median price per sqft Nashville zip codes 2020 to 2025">37207 $229–$323 · 37206 $232–$362</canvas></div>
+          <div class="leg-row" id="chart-legend"></div>
+          <div class="chart-wrap"><canvas id="priceChart" role="img" aria-label="Median sale price by zip code 2020 to 2025">Nashville new construction median prices 2020 to 2025.</canvas></div>
+          <div class="leg-row" id="chart-legend-psqft"></div>
+          <div class="chart-wrap"><canvas id="psqftChart" role="img" aria-label="Median price per sqft by zip code 2020 to 2025">Nashville new construction median price per sqft 2020 to 2025.</canvas></div>
           <div class="comp-note" id="comp-note"></div>
           <p style="font-size:10px;color:var(--muted);margin-top:10px;line-height:1.6;">Realtracs MLS · Detached SINGL &amp; HPR-D · Year built within 1–2 years of close · Closed 2020–2025. Information believed accurate but not guaranteed. © 2026 Realtracs, Inc.</p>
         </div>
@@ -401,7 +391,6 @@ input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
         <div class="pdf-disclaimer">This tool does not promise zoning approval, construction pricing, financing, permits, or final resale value.</div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -426,113 +415,162 @@ input[type=range]{width:100%;accent-color:var(--red);cursor:pointer;}
 <script>
 emailjs.init('hMLwRDdoesAV7z3sK');
 
+// ══════ ZIP / AREA DATA ══════
+// To add a new zip: add entry to ZIPS, add zip to correct area in AREAS (or create new area)
+var AREAS=[
+  {label:'East Nashville',zips:['37206','37207']},
+  {label:'North Nashville',zips:['37208']},
+  {label:'South Nashville',zips:['37211']}
+];
+
+// Chart colors assigned per zip (add more as needed)
+var ZIP_COLORS={
+  '37206':'#C0392B',
+  '37207':'#1a6b3c',
+  '37208':'#1e3a6b',
+  '37211':'#B8860B'
+};
+
 var YEARS=['2020','2021','2022','2023','2024','2025'];
+
 var ZIPS={
-  '37207':{
-    neighborhood:'Nashville (37207)',
-    medPrice:[447000,502500,695000,523750,598950,646900],
-    avgPrice:[452297,559022,759081,607475,673312,751876],
-    medPsqft:[229,256,332,286,309,323],
-    sales:[65,51,27,51,82,60],
-    medDOM:[9,0,1,0,15,13],
-    priceRange:['$339K–$670K','$350K–$1.16M','$446K–$1.05M','$330K–$1.5M','$349K–$1.51M','$380K–$1.45M'],
-    medPsqftLatest:323,
-    medPriceLatest:646900,
-    defaultSqft:1800,
-    pctGrowth5yr:45,
-    insight:'<strong>37207 · Nashville · 2020–2025.</strong> Median prices grew from $447K to $647K — a 45% increase. Median $/sqft climbed from $229 to $323. The 2022 spike reflects a small high-end sample (27 sales) weighted toward Cleveland Park — treat that year with caution. Volume recovered strongly in 2024–2025.',
-    note2022:'Low 2022 volume (27 sales) reflects rate-environment pullback and a filter window weighted toward larger Cleveland Park product.'
-  },
   '37206':{
-    neighborhood:'Nashville (37206)',
+    area:'East Nashville',
     medPrice:[564170,655250,850000,910000,810000,1112500],
     avgPrice:[560130,699015,929319,1024682,921157,1117700],
     medPsqft:[232,273,326,329,330,362],
-    sales:[85,100,100,100,91,62],
-    medDOM:[12,8,2,17,22,17],
+    sales:[85,100,100,100,91,62],medDOM:[12,8,2,17,22,17],
     priceRange:['$353K–$1.18M','$369K–$1.77M','$450K–$2.25M','$350K–$3.0M','$560K–$2.25M','$499K–$2.2M'],
-    medPsqftLatest:362,
-    medPriceLatest:1112500,
-    defaultSqft:2000,
-    pctGrowth5yr:97,
-    insight:'<strong>37206 · Nashville · 2020–2025.</strong> Median prices climbed from $564K to $1.11M — a 97% increase over five years. Median $/sqft rose from $232 to $362. Volume was consistently strong at 85–100 closings annually through 2024. Lockeland Springs, Shelby Hills, and Rosebank/Fortland Park drive the upper tier.',
+    medPsqftLatest:362,medPriceLatest:1112500,defaultSqft:2000,pctGrowth5yr:97,
+    insight:'<strong>37206 · East Nashville · 2020–2025.</strong> Median prices climbed from $564K to $1.11M — a 97% increase over five years. Median $/sqft rose from $232 to $362. Volume was consistently strong at 85–100 closings annually through 2024. Lockeland Springs, Shelby Hills, and Rosebank/Fortland Park drive the upper tier.',
+    note2022:''
+  },
+  '37207':{
+    area:'East Nashville',
+    medPrice:[447000,502500,695000,523750,598950,646900],
+    avgPrice:[452297,559022,759081,607475,673312,751876],
+    medPsqft:[229,256,332,286,309,323],
+    sales:[65,51,27,51,82,60],medDOM:[9,0,1,0,15,13],
+    priceRange:['$339K–$670K','$350K–$1.16M','$446K–$1.05M','$330K–$1.5M','$349K–$1.51M','$380K–$1.45M'],
+    medPsqftLatest:323,medPriceLatest:646900,defaultSqft:1800,pctGrowth5yr:45,
+    insight:'<strong>37207 · East Nashville · 2020–2025.</strong> Median prices grew from $447K to $647K — a 45% increase. Median $/sqft climbed from $229 to $323. The 2022 spike reflects a small high-end sample (27 sales) weighted toward Cleveland Park — treat that year with caution. Volume recovered strongly in 2024–2025.',
+    note2022:'Low 2022 volume (27 sales) reflects a filter window weighted toward larger Cleveland Park product.'
+  },
+  '37208':{
+    area:'North Nashville',
+    medPrice:[400000,499900,630000,628000,599000,625000],
+    avgPrice:[420214,519989,628105,633588,647719,646215],
+    medPsqft:[218,253,300,273,272,276],
+    sales:[100,83,49,41,52,27],medDOM:[26,18,5,11,26,22],
+    priceRange:['$139K–$935K','$220K–$797K','$250K–$1.07M','$350K–$1.2M','$228K–$1.45M','$315K–$900K'],
+    medPsqftLatest:276,medPriceLatest:625000,defaultSqft:1900,pctGrowth5yr:56,
+    insight:'<strong>37208 · North Nashville · 2020–2025.</strong> Median prices rose from $400K to $625K — a 56% increase over five years. The market peaked in 2022 at $630K, pulled back slightly in 2023–2024, and stabilized around $600–625K. Buchanan Arts District, Buena Vista, and Germantown-adjacent pockets command the higher price points. Volume has trended down since 2021 as available lots become scarcer.',
+    note2022:''
+  },
+  '37211':{
+    area:'South Nashville',
+    medPrice:[499000,544800,570929,642500,710000,899000],
+    avgPrice:[497860,541040,615906,673739,708560,802316],
+    medPsqft:[209,234,271,274,294,284],
+    sales:[79,83,50,55,82,82],medDOM:[3,0,3,9,17,1],
+    priceRange:['$339K–$660K','$350K–$850K','$400K–$1.71M','$380K–$1.19M','$411K–$1.17M','$425K–$1.08M'],
+    medPsqftLatest:284,medPriceLatest:899000,defaultSqft:2400,pctGrowth5yr:80,
+    insight:'<strong>37211 · South Nashville · 2020–2025.</strong> Median prices climbed from $499K to $899K — an 80% increase over five years. The 2025 median is significantly influenced by Sycamore Estates and View at the Woodlands delivering a high volume of larger $850K–$1M+ product. Woodbine, Melrose, and Crieve Hall represent the more accessible price points. Volume has been consistently strong at 79–83 closings annually.',
     note2022:''
   }
 };
-var ZIP_ORDER=['37207','37206'];
 
-var activeZip='37207',activeZone='rs',selYear=5,mktOpen=false,chartsBuilt=false;
+// ══════ STATE ══════
+var activeZip='37206',activeZone='rs',selYear=5,mktOpen=false,chartsBuilt=false;
 var lastCalc={};
 var _syncing=false;
+var charts={};
 
-function buildZipPills(){
-  var wrap=document.getElementById('zip-pills');
+// ══════ BUILD ZIP GROUP SELECTOR ══════
+function buildZipGroups(){
+  var wrap=document.getElementById('zip-groups');
   wrap.innerHTML='';
-  ZIP_ORDER.forEach(function(z){
-    var b=document.createElement('button');
-    b.className='zip-pill'+(z===activeZip?' active':'');
-    b.textContent=z;
-    b.onclick=function(){
-      activeZip=z;
-      document.querySelectorAll('.zip-pill').forEach(function(x){x.classList.remove('active');});
-      b.classList.add('active');
-      document.getElementById('mkt-zip-lbl').textContent=z;
-      applyZipDefaults(z);
-      updateMktContext();
-      updateInsight();
-      updateMktStats();
-      if(chartsBuilt)buildCharts();
-      calc();
-    };
-    wrap.appendChild(b);
+  AREAS.forEach(function(area){
+    var grp=document.createElement('div');
+    grp.className='zip-area-group';
+    var lbl=document.createElement('span');
+    lbl.className='zip-area-label';
+    lbl.textContent=area.label;
+    grp.appendChild(lbl);
+    var pills=document.createElement('div');
+    pills.className='zip-pills';
+    area.zips.forEach(function(z){
+      var b=document.createElement('button');
+      b.className='zip-pill'+(z===activeZip?' active':'');
+      b.textContent=z;
+      b.setAttribute('data-zip',z);
+      b.onclick=function(){
+        activeZip=z;
+        document.querySelectorAll('.zip-pill').forEach(function(x){x.classList.remove('active');});
+        b.classList.add('active');
+        document.getElementById('mkt-zip-lbl').textContent=z;
+        applyZipDefaults(z);
+        updateMktContext();
+        updateInsight();
+        updateMktStats();
+        if(chartsBuilt)buildCharts();
+        calc();
+      };
+      pills.appendChild(b);
+    });
+    grp.appendChild(pills);
+    wrap.appendChild(grp);
   });
+  updateZipMeta();
+}
+
+function updateZipMeta(){
+  var d=ZIPS[activeZip];
+  document.getElementById('zip-meta').textContent=activeZip+' · '+d.area+' · 2025 median $'+Math.round(d.medPrice[5]/1000)+'K · $'+d.medPsqft[5]+'/sqft';
 }
 
 function applyZipDefaults(z){
   var d=ZIPS[z];
   var sqftEl=document.getElementById('sqft');
-  var resaleEl=document.getElementById('resale');
-  var resalePsfEl=document.getElementById('resale-psf');
-
   sqftEl.value=d.defaultSqft;
   var resaleVal=Math.round(d.medPriceLatest/1000)*1000;
   var psfVal=Math.round(resaleVal/d.defaultSqft);
-
-  resaleEl.value=resaleVal.toLocaleString();
-  resalePsfEl.value=psfVal.toLocaleString();
-
-  // Flash animation
-  [resaleEl,resalePsfEl].forEach(function(el){
+  document.getElementById('resale').value=resaleVal.toLocaleString();
+  document.getElementById('resale-psf').value=psfVal.toLocaleString();
+  [document.getElementById('resale'),document.getElementById('resale-psf')].forEach(function(el){
     el.classList.add('flash');
     setTimeout(function(){el.classList.remove('flash');},800);
   });
-
-  // Show notice
   var notice=document.getElementById('defaults-notice');
-  var noticeTxt=document.getElementById('defaults-notice-txt');
-  noticeTxt.textContent='Defaults updated to '+z+' 2025 median — adjust for your specific deal.';
+  document.getElementById('defaults-notice-txt').textContent='Defaults updated to '+z+' 2025 median — adjust for your specific deal.';
   notice.style.display='flex';
   setTimeout(function(){notice.style.display='none';},4000);
 }
 
 function updateMktContext(){
   var d=ZIPS[activeZip];
-  var n7=ZIPS['37207'],n6=ZIPS['37206'];
   document.getElementById('mkt-ctx-grid').innerHTML=
     '<div class="mkt-ctx-cell"><div class="mkt-ctx-val">$'+Math.round(d.medPrice[5]/1000)+'K</div><div class="mkt-ctx-lbl">2025 median sale</div></div>'+
     '<div class="mkt-ctx-cell"><div class="mkt-ctx-val">$'+d.medPsqft[5]+'/sf</div><div class="mkt-ctx-lbl">2025 median $/sqft</div></div>'+
     '<div class="mkt-ctx-cell"><div class="mkt-ctx-val">'+d.medDOM[5]+' days</div><div class="mkt-ctx-lbl">2025 median DOM</div></div>';
   var g=d.pctGrowth5yr;
-  var bc=g>=50?'up':'mod';
-  document.getElementById('mkt-trend-row').innerHTML=
-    '<strong>5-year median price growth (2020–2025)</strong><span class="mkt-trend-badge '+bc+'">+'+g+'%</span>';
-  var max=Math.max(n7.medPsqft[5],n6.medPsqft[5]);
-  document.getElementById('psqft-compare').innerHTML=
-    '<div class="psqft-compare-lbl">2025 median $/sqft — market comparison</div>'+
-    '<div class="psqft-bar-row"><span class="psqft-zip">37207</span><div class="psqft-track"><div class="psqft-fill" style="width:'+Math.round(n7.medPsqft[5]/max*100)+'%;background:#C0392B;height:100%;border-radius:4px;"></div></div><span class="psqft-val" style="color:#C0392B">$'+n7.medPsqft[5]+'/sf</span></div>'+
-    '<div class="psqft-bar-row"><span class="psqft-zip">37206</span><div class="psqft-track"><div class="psqft-fill" style="width:'+Math.round(n6.medPsqft[5]/max*100)+'%;background:#1a6b3c;height:100%;border-radius:4px;"></div></div><span class="psqft-val" style="color:#1a6b3c">$'+n6.medPsqft[5]+'/sf</span></div>';
+  document.getElementById('mkt-trend-row').innerHTML='<strong>5-year median price growth (2020–2025)</strong><span class="mkt-trend-badge '+(g>=60?'up':'mod')+'">+'+g+'%</span>';
+
+  // $/sqft comparison bars — all zips
+  var allZips=Object.keys(ZIPS);
+  var maxPsqft=Math.max.apply(null,allZips.map(function(z){return ZIPS[z].medPsqft[5];}));
+  var rows=allZips.map(function(z){
+    var pct=Math.round(ZIPS[z].medPsqft[5]/maxPsqft*100);
+    var col=ZIP_COLORS[z]||'#888';
+    var isActive=z===activeZip;
+    return'<div class="psqft-bar-row"><span class="psqft-zip" style="'+(isActive?'font-weight:700;color:var(--text)':'')+'">'+z+'</span>'+
+      '<div class="psqft-track"><div class="psqft-fill" style="width:'+pct+'%;background:'+col+';height:100%;border-radius:4px;opacity:'+(isActive?'1':'.5')+'"></div></div>'+
+      '<span class="psqft-val" style="color:'+col+';opacity:'+(isActive?'1':'.7')+'">$'+ZIPS[z].medPsqft[5]+'/sf</span></div>';
+  }).join('');
+  document.getElementById('psqft-compare').innerHTML='<div class="psqft-compare-lbl">2025 median $/sqft — all markets</div>'+rows;
 }
 
+// ══════ ZONE ══════
 function setZone(z,el){
   document.querySelectorAll('.z-btn').forEach(function(b){b.classList.remove('active');});
   el.classList.add('active');activeZone=z;
@@ -546,6 +584,7 @@ function setZone(z,el){
   calc();
 }
 
+// ══════ UTILS ══════
 function fmtM(el){var r=el.value.replace(/[^0-9]/g,'');if(!r){el.value='';return;}el.value=parseInt(r,10).toLocaleString();}
 function parsM(s){return parseInt((s||'').replace(/[^0-9]/g,''),10)||0;}
 function fmt(n){return'$'+Math.round(n).toLocaleString();}
@@ -565,7 +604,6 @@ function resaleChanged(source){
   }
   _syncing=false;
 }
-
 function syncResaleOnSqftChange(){
   if(_syncing)return;_syncing=true;
   var sqft=parseInt(document.getElementById('sqft').value)||1800;
@@ -574,6 +612,7 @@ function syncResaleOnSqftChange(){
   _syncing=false;
 }
 
+// ══════ CALC ══════
 function calc(){
   var d=ZIPS[activeZip];
   var lot=parsM(document.getElementById('lot').value);
@@ -606,10 +645,8 @@ function calc(){
     lotPerUnit,buildPerUnit,totalCostPerUnit,psqftSale,lotPct,sellCostPerUnit};
 
   var mc=marginClass(margin);
-  var mp=document.getElementById('margin-pct');
-  mp.textContent=fmtP(margin);mp.className='margin-pct '+mc;
-  var mb=document.getElementById('margin-badge');
-  mb.textContent=marginLabel(margin);mb.className='margin-badge '+mc;
+  var mp=document.getElementById('margin-pct');mp.textContent=fmtP(margin);mp.className='margin-pct '+mc;
+  var mb=document.getElementById('margin-badge');mb.textContent=marginLabel(margin);mb.className='margin-badge '+mc;
 
   var diff=psqftSale-med;
   document.getElementById('psqft-ctx').innerHTML=
@@ -637,13 +674,14 @@ function calc(){
   document.getElementById('lr-note').textContent=lotPct<=20?'Within the ≤20% investor rule of thumb.':lotPct<=30?'Slightly above the 20% rule — tighter margin for error.':'Above 30% — most investors would want the lot price lower or the exit price higher.';
 }
 
+// ══════ PDF ══════
 function downloadPDF(){
   var c=lastCalc;if(!c.sqft){calc();c=lastCalc;}
   var mc=marginClass(c.margin);
   var mcColor=mc==='strong'?'#16a34a':mc==='moderate'?'#d97706':'#dc2626';
   var dateStr=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   var zoneLabel={'rs':'Rs Zoning (1 unit)','r':'R Zoning (2 units)','mul':'Mul Zoning (multi-unit)','sp':'SP Zoning (special purpose)'}[c.activeZone]||c.activeZone;
-  var neighborhood=ZIPS[c.activeZip].neighborhood;
+  var areaLabel=ZIPS[c.activeZip].area;
 
   var btn=document.getElementById('pdf-btn');
   var status=document.getElementById('notify-status');
@@ -652,28 +690,15 @@ function downloadPDF(){
   status.textContent='';status.style.color='';
 
   emailjs.send('service_9p636hd','template_rw0y25g',{
-    zip:c.activeZip,
-    market_label:neighborhood,
-    zoning:zoneLabel,
-    units:c.units,
-    lot:fmt(c.lot),
-    sqft:c.sqft.toLocaleString()+' sqft',
-    bpsf:'$'+c.bpsf+'/sf',
-    softcosts:fmt(c.softPerUnit),
-    resale:fmt(c.resalePerUnit),
-    sell_pct:fmtP(c.sellPct*100),
-    gross_revenue:fmt(c.totalRevenue),
-    net_profit:fmt(c.totalProfit),
-    margin:fmtP(c.margin),
-    roi:fmtP(c.roi),
-    breakeven:fmt(c.breakEven),
-    date:dateStr
+    zip:c.activeZip,market_label:areaLabel,zoning:zoneLabel,units:c.units,
+    lot:fmt(c.lot),sqft:c.sqft.toLocaleString()+' sqft',bpsf:'$'+c.bpsf+'/sf',
+    softcosts:fmt(c.softPerUnit),resale:fmt(c.resalePerUnit),sell_pct:fmtP(c.sellPct*100),
+    gross_revenue:fmt(c.totalRevenue),net_profit:fmt(c.totalProfit),
+    margin:fmtP(c.margin),roi:fmtP(c.roi),breakeven:fmt(c.breakEven),date:dateStr
   }).then(function(){
-    status.textContent='✓ Summary sent to Jason';
-    status.style.color='#4ade80';
+    status.textContent='✓ Summary sent to Jason';status.style.color='#4ade80';
     setTimeout(function(){status.textContent='';},5000);
-  },function(){
-    status.textContent='';
+  },function(){status.textContent='';
   }).finally(function(){
     btn.disabled=false;
     btn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download PDF Deal Summary';
@@ -685,8 +710,7 @@ function downloadPDF(){
   '.hdr-title{font-size:20px;font-weight:700;}.hdr-sub{font-size:11px;color:#888;margin-top:3px;line-height:1.6;}'+
   '.hdr-badge{background:#C0392B;color:#fff;padding:5px 12px;border-radius:5px;font-size:12px;font-weight:600;white-space:nowrap;}'+
   '.margin-big{text-align:center;padding:20px;background:#f8f8f8;border-radius:8px;margin-bottom:20px;}'+
-  '.margin-num{font-size:48px;font-weight:800;color:'+mcColor+';}'+
-  '.margin-grade{font-size:14px;font-weight:600;color:'+mcColor+';margin-top:4px;}'+
+  '.margin-num{font-size:48px;font-weight:800;color:'+mcColor+';}.margin-grade{font-size:14px;font-weight:600;color:'+mcColor+';margin-top:4px;}'+
   '.margin-lbl{font-size:12px;color:#888;margin-top:3px;}'+
   '.sec{margin-bottom:20px;}.sec-title{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:8px;border-bottom:1px solid #eee;padding-bottom:4px;}'+
   '.row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f4f4f4;font-size:13px;}.row:last-child{border-bottom:none;}'+
@@ -698,10 +722,10 @@ function downloadPDF(){
   '@media print{body{padding:16px;}}</style></head><body>'+
   '<div class="hdr"><div><div class="hdr-title">Deal Summary · '+c.activeZip+'</div>'+
   '<div class="hdr-sub">Jason Kaczmarski · RE/MAX 1st Choice<br>(615) 587-7888 · jasonk@realtracs.com<br>Generated '+dateStr+'</div></div>'+
-  '<div class="hdr-badge">'+c.activeZip+' · '+neighborhood+'</div></div>'+
+  '<div class="hdr-badge">'+c.activeZip+' · '+areaLabel+'</div></div>'+
   '<div class="margin-big"><div class="margin-num">'+fmtP(c.margin)+'</div><div class="margin-grade">'+marginLabel(c.margin)+'</div><div class="margin-lbl">Estimated profit margin</div></div>'+
   '<div class="sec"><div class="sec-title">Project inputs</div>'+
-  '<div class="row"><span>Market</span><span>'+c.activeZip+' · '+neighborhood+'</span></div>'+
+  '<div class="row"><span>Market</span><span>'+c.activeZip+' · '+areaLabel+'</span></div>'+
   '<div class="row"><span>Zoning</span><span>'+zoneLabel+(c.units>1?' · '+c.units+' units':'')+'</span></div>'+
   '<div class="row"><span>Lot / teardown cost</span><span>'+fmt(c.lot)+'</span></div>'+
   '<div class="row"><span>Square footage per unit</span><span>'+c.sqft.toLocaleString()+' sqft</span></div>'+
@@ -725,12 +749,11 @@ function downloadPDF(){
   '</div></div>'+
   '<div class="foot">All figures are estimates based on inputs provided — not guaranteed. This report does not constitute financial, legal, tax, or investment advice.<br>Market data: Realtracs MLS · Nashville new construction · Information believed accurate but not guaranteed. © 2026 Realtracs, Inc.<br><br>Jason Kaczmarski · RE/MAX 1st Choice · (615) 587-7888 · jasonk@realtracs.com</div>'+
   '</body></html>';
-
   var w=window.open('','_blank');
   if(w){w.document.write(html);w.document.close();setTimeout(function(){w.print();},600);}
 }
 
-var charts={};
+// ══════ MARKET TRENDS ══════
 function toggleMarket(){
   mktOpen=!mktOpen;
   document.getElementById('mkt-body').classList.toggle('open',mktOpen);
@@ -739,7 +762,9 @@ function toggleMarket(){
   if(mktOpen&&!chartsBuilt){buildCharts();chartsBuilt=true;}
   if(mktOpen){updateInsight();updateMktStats();}
 }
+
 function updateInsight(){document.getElementById('mkt-insight').innerHTML=ZIPS[activeZip].insight;}
+
 function buildYrBtns(){
   var wrap=document.getElementById('yr-row');wrap.innerHTML='';
   YEARS.forEach(function(y,i){
@@ -748,6 +773,7 @@ function buildYrBtns(){
     wrap.appendChild(b);
   });
 }
+
 function updateMktStats(){
   var d=ZIPS[activeZip],i=selYear;
   document.getElementById('mkt-stats').innerHTML=
@@ -757,31 +783,55 @@ function updateMktStats(){
     '<div class="ms"><div class="ms-val">'+d.medDOM[i]+' days</div><div class="ms-lbl">Median DOM</div></div>'+
     '<div class="ms"><div class="ms-val">$'+Math.round(d.avgPrice[i]/1000)+'K</div><div class="ms-lbl">Avg sale price</div></div>'+
     '<div class="ms"><div class="ms-val" style="font-size:12px">'+d.priceRange[i]+'</div><div class="ms-lbl">Price range</div></div>';
-  var n7=ZIPS['37207'],n6=ZIPS['37206'];
-  var gap=Math.round((n6.medPrice[i]-n7.medPrice[i])/1000);
-  var gapPct=Math.round((n6.medPrice[i]-n7.medPrice[i])/n7.medPrice[i]*100);
-  document.getElementById('comp-note').innerHTML='<strong>'+YEARS[i]+' comparison.</strong> 37206 median ($'+Math.round(n6.medPrice[i]/1000)+'K) ran $'+gap+'K / '+gapPct+'% above 37207 ($'+Math.round(n7.medPrice[i]/1000)+'K). $/sqft: 37206 $'+n6.medPsqft[i]+' vs. 37207 $'+n7.medPsqft[i]+'.';
-}
-var GC='rgba(0,0,0,.05)',TC='#6b6860';
-function buildCharts(){
-  var n7=ZIPS['37207'],n6=ZIPS['37206'];
-  var base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:GC},ticks:{font:{size:10},color:TC}},y:{grid:{color:GC},ticks:{font:{size:10},color:TC}}}};
-  if(charts.p)charts.p.destroy();
-  charts.p=new Chart(document.getElementById('priceChart'),{type:'line',data:{labels:YEARS,datasets:[
-    {data:n7.medPrice,borderColor:'#C0392B',backgroundColor:'rgba(192,57,43,.06)',borderWidth:2,pointRadius:4,pointBackgroundColor:'#C0392B',tension:.3,fill:true},
-    {data:n6.medPrice,borderColor:'#1a6b3c',backgroundColor:'rgba(26,107,60,.06)',borderWidth:2,pointRadius:4,pointBackgroundColor:'#1a6b3c',tension:.3,fill:true},
-    {data:n7.avgPrice,borderColor:'rgba(192,57,43,.38)',backgroundColor:'transparent',borderWidth:1.5,pointRadius:2,borderDash:[5,4],tension:.3},
-    {data:n6.avgPrice,borderColor:'rgba(26,107,60,.38)',backgroundColor:'transparent',borderWidth:1.5,pointRadius:2,borderDash:[5,4],tension:.3},
-  ]},options:{...base,scales:{...base.scales,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:function(v){return'$'+Math.round(v/1000)+'K';}}}}}});
-  if(charts.s)charts.s.destroy();
-  charts.s=new Chart(document.getElementById('psqftChart'),{type:'line',data:{labels:YEARS,datasets:[
-    {data:n7.medPsqft,borderColor:'#C0392B',backgroundColor:'rgba(192,57,43,.06)',borderWidth:2,pointRadius:4,pointBackgroundColor:'#C0392B',tension:.3,fill:true},
-    {data:n6.medPsqft,borderColor:'#1a6b3c',backgroundColor:'rgba(26,107,60,.06)',borderWidth:2,pointRadius:4,pointBackgroundColor:'#1a6b3c',tension:.3,fill:true},
-  ]},options:{...base,scales:{...base.scales,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:function(v){return'$'+v+'/sf';}}}}}});
+
+  // Comparison note: all zips vs active
+  var allZ=Object.keys(ZIPS);
+  var notes=allZ.filter(function(z){return z!==activeZip;}).map(function(z){
+    var gap=Math.round((ZIPS[activeZip].medPrice[i]-ZIPS[z].medPrice[i])/1000);
+    var abs=Math.abs(gap);
+    var dir=gap>=0?'above':'below';
+    return activeZip+' median ($'+Math.round(ZIPS[activeZip].medPrice[i]/1000)+'K) ran $'+abs+'K '+dir+' '+z+' ($'+Math.round(ZIPS[z].medPrice[i]/1000)+'K) in '+YEARS[i]+'.';
+  });
+  document.getElementById('comp-note').innerHTML='<strong>'+YEARS[i]+' market comparison.</strong> '+notes.join(' ');
 }
 
-// BOOT
-buildZipPills();
+var GC='rgba(0,0,0,.05)',TC='#6b6860';
+function buildCharts(){
+  var allZips=Object.keys(ZIPS);
+
+  // Build legends
+  var legPrice=allZips.map(function(z){
+    return'<span style="display:flex;align-items:center;gap:4px"><span class="leg-dot" style="background:'+ZIP_COLORS[z]+'"></span>'+z+'</span>';
+  }).join('');
+  document.getElementById('chart-legend').innerHTML=legPrice;
+  document.getElementById('chart-legend-psqft').innerHTML=legPrice;
+
+  var base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:GC},ticks:{font:{size:10},color:TC}},y:{grid:{color:GC},ticks:{font:{size:10},color:TC}}}};
+
+  var priceDatasets=allZips.map(function(z){
+    var col=ZIP_COLORS[z]||'#888';
+    return{label:z,data:ZIPS[z].medPrice,borderColor:col,backgroundColor:col.replace(')',',0.06)').replace('rgb','rgba').replace('#','rgba(').replace(/([0-9a-f]{2})/gi,function(m){return parseInt(m,16)+',';}).replace(/,$/,''),borderWidth:z===activeZip?2.5:1.5,pointRadius:z===activeZip?4:3,pointBackgroundColor:col,tension:.3,fill:false,borderDash:z===activeZip?[]:[4,3]};
+  });
+  // Simpler approach:
+  var priceDS=allZips.map(function(z){
+    var col=ZIP_COLORS[z]||'#888';
+    var isActive=z===activeZip;
+    return{label:z,data:ZIPS[z].medPrice,borderColor:col,backgroundColor:'transparent',borderWidth:isActive?2.5:1.5,pointRadius:isActive?4:2,pointBackgroundColor:col,tension:.3,fill:false,borderDash:isActive?[]:[5,4]};
+  });
+  var psqftDS=allZips.map(function(z){
+    var col=ZIP_COLORS[z]||'#888';
+    var isActive=z===activeZip;
+    return{label:z,data:ZIPS[z].medPsqft,borderColor:col,backgroundColor:'transparent',borderWidth:isActive?2.5:1.5,pointRadius:isActive?4:2,pointBackgroundColor:col,tension:.3,fill:false,borderDash:isActive?[]:[5,4]};
+  });
+
+  if(charts.p)charts.p.destroy();
+  charts.p=new Chart(document.getElementById('priceChart'),{type:'line',data:{labels:YEARS,datasets:priceDS},options:{...base,scales:{...base.scales,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:function(v){return'$'+Math.round(v/1000)+'K';}}}}}});
+  if(charts.s)charts.s.destroy();
+  charts.s=new Chart(document.getElementById('psqftChart'),{type:'line',data:{labels:YEARS,datasets:psqftDS},options:{...base,scales:{...base.scales,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:function(v){return'$'+v+'/sf';}}}}}});
+}
+
+// ══════ BOOT ══════
+buildZipGroups();
 buildYrBtns();
 updateInsight();
 updateMktStats();
