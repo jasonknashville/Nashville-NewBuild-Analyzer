@@ -526,7 +526,7 @@ function buildZipGroups(){
 
 function updateZipMeta(){
   var d=ZIPS[activeZip];
-  document.getElementById('zip-meta').textContent=activeZip+' · '+d.area+' · 2025 median $'+Math.round(d.medPrice[5]/1000)+'K · $'+d.medPsqft[5]+'/sqft';
+  document.getElementById('zip-meta').textContent=activeZip+' · '+d.area+' · 2025 median '+fmtK(d.medPrice[5])+' · $'+d.medPsqft[5]+'/sqft';
 }
 
 function applyZipDefaults(z){
@@ -550,7 +550,7 @@ function applyZipDefaults(z){
 function updateMktContext(){
   var d=ZIPS[activeZip];
   document.getElementById('mkt-ctx-grid').innerHTML=
-    '<div class="mkt-ctx-cell"><div class="mkt-ctx-val">$'+Math.round(d.medPrice[5]/1000)+'K</div><div class="mkt-ctx-lbl">2025 median sale</div></div>'+
+    '<div class="mkt-ctx-cell"><div class="mkt-ctx-val">'+fmtK(d.medPrice[5])+'</div><div class="mkt-ctx-lbl">2025 median sale</div></div>'+
     '<div class="mkt-ctx-cell"><div class="mkt-ctx-val">$'+d.medPsqft[5]+'/sf</div><div class="mkt-ctx-lbl">2025 median $/sqft</div></div>'+
     '<div class="mkt-ctx-cell"><div class="mkt-ctx-val">'+d.medDOM[5]+' days</div><div class="mkt-ctx-lbl">2025 median DOM</div></div>';
   var g=d.pctGrowth5yr;
@@ -588,6 +588,7 @@ function setZone(z,el){
 function fmtM(el){var r=el.value.replace(/[^0-9]/g,'');if(!r){el.value='';return;}el.value=parseInt(r,10).toLocaleString();}
 function parsM(s){return parseInt((s||'').replace(/[^0-9]/g,''),10)||0;}
 function fmt(n){return'$'+Math.round(n).toLocaleString();}
+function fmtK(n){if(n>=1000000){return'$'+(Math.round(n/10000)/100).toFixed(2).replace(/\.?0+$/,'')+'M';}return'$'+Math.round(n/1000)+'K';}
 function fmtP(n){return(Math.round(n*10)/10)+'%';}
 function marginClass(m){return m>=18?'strong':m>=10?'moderate':m>=0?'thin':'negative';}
 function marginLabel(m){return m>=18?'Strong (≥18%)':m>=10?'Moderate (10–17%)':m>=0?'Thin (0–9%)':'Negative — deal does not pencil';}
@@ -778,10 +779,10 @@ function updateMktStats(){
   var d=ZIPS[activeZip],i=selYear;
   document.getElementById('mkt-stats').innerHTML=
     '<div class="ms"><div class="ms-val">'+d.sales[i]+'</div><div class="ms-lbl">Closed sales</div></div>'+
-    '<div class="ms"><div class="ms-val">$'+Math.round(d.medPrice[i]/1000)+'K</div><div class="ms-lbl">Median sale price</div></div>'+
+    '<div class="ms"><div class="ms-val">'+fmtK(d.medPrice[i])+'</div><div class="ms-lbl">Median sale price</div></div>'+
     '<div class="ms"><div class="ms-val">$'+d.medPsqft[i]+'/sf</div><div class="ms-lbl">Median $/sqft</div></div>'+
     '<div class="ms"><div class="ms-val">'+d.medDOM[i]+' days</div><div class="ms-lbl">Median DOM</div></div>'+
-    '<div class="ms"><div class="ms-val">$'+Math.round(d.avgPrice[i]/1000)+'K</div><div class="ms-lbl">Avg sale price</div></div>'+
+    '<div class="ms"><div class="ms-val">'+fmtK(d.avgPrice[i])+'</div><div class="ms-lbl">Avg sale price</div></div>'+
     '<div class="ms"><div class="ms-val" style="font-size:12px">'+d.priceRange[i]+'</div><div class="ms-lbl">Price range</div></div>';
 
   // Comparison note: all zips vs active
@@ -790,7 +791,7 @@ function updateMktStats(){
     var gap=Math.round((ZIPS[activeZip].medPrice[i]-ZIPS[z].medPrice[i])/1000);
     var abs=Math.abs(gap);
     var dir=gap>=0?'above':'below';
-    return activeZip+' median ($'+Math.round(ZIPS[activeZip].medPrice[i]/1000)+'K) ran $'+abs+'K '+dir+' '+z+' ($'+Math.round(ZIPS[z].medPrice[i]/1000)+'K) in '+YEARS[i]+'.';
+    return activeZip+' median ('+fmtK(ZIPS[activeZip].medPrice[i])+') ran '+fmtK(Math.abs(ZIPS[activeZip].medPrice[i]-ZIPS[z].medPrice[i]))+' '+dir+' '+z+' ('+fmtK(ZIPS[z].medPrice[i])+') in '+YEARS[i]+'.';
   });
   document.getElementById('comp-note').innerHTML='<strong>'+YEARS[i]+' market comparison.</strong> '+notes.join(' ');
 }
@@ -825,7 +826,7 @@ function buildCharts(){
   });
 
   if(charts.p)charts.p.destroy();
-  charts.p=new Chart(document.getElementById('priceChart'),{type:'line',data:{labels:YEARS,datasets:priceDS},options:{...base,scales:{...base.scales,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:function(v){return'$'+Math.round(v/1000)+'K';}}}}}});
+  charts.p=new Chart(document.getElementById('priceChart'),{type:'line',data:{labels:YEARS,datasets:priceDS},options:{...base,scales:{...base.scales,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:function(v){return fmtK(v);}}}}}});
   if(charts.s)charts.s.destroy();
   charts.s=new Chart(document.getElementById('psqftChart'),{type:'line',data:{labels:YEARS,datasets:psqftDS},options:{...base,scales:{...base.scales,y:{...base.scales.y,ticks:{...base.scales.y.ticks,callback:function(v){return'$'+v+'/sf';}}}}}});
 }
